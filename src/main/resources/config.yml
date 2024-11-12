@@ -1,0 +1,25 @@
+# ██╗░░░░░░█████╗░░██████╗░░██████╗██████╗░███████╗███╗░░░███╗░█████╗░██╗░░░██╗███████╗██████╗░
+# ██║░░░░░██╔══██╗██╔════╝░██╔════╝██╔══██╗██╔════╝████╗░████║██╔══██╗██║░░░██║██╔════╝██╔══██╗
+# ██║░░░░░██║░░██║██║░░██╗░╚█████╗░██████╔╝█████╗░░██╔████╔██║██║░░██║╚██╗░██╔╝█████╗░░██████╔╝
+# ██║░░░░░██║░░██║██║░░╚██╗░╚═══██╗██╔══██╗██╔══╝░░██║╚██╔╝██║██║░░██║░╚████╔╝░██╔══╝░░██╔══██╗
+# ███████╗╚█████╔╝╚██████╔╝██████╔╝██║░░██║███████╗██║░╚═╝░██║╚█████╔╝░░╚██╔╝░░███████╗██║░░██║
+# ╚══════╝░╚════╝░░╚═════╝░╚═════╝░╚═╝░░╚═╝╚══════╝╚═╝░░░░░╚═╝░╚════╝░░░░╚═╝░░░╚══════╝╚═╝░░╚═╝
+#
+# Contact dev(discord): groundbreakingmc
+
+# Specify here how old does your log file have to be, to be deleted
+# (if you don't write the letter, it will be counted as hours)
+# m = month | w = week | d = day | h = hours
+# Examples:
+# If you want to delete files older than 1 month and 2 weeks, specify -> 1m 2w
+# If you want to delete files older than 1 week and 3 days, specify -> 1w 3d
+# If you want to delete files older than 1 month, 1 week, 3 days and 2 hours, specify -> 1m 1w 3d 2h
+delete-if-older-then: 1w
+
+# Specify here your logs directory
+logs-directory: 'logs'
+
+# don't touch it
+config-version: 1.0
+
+no-permission: "§cSorry, but you don't have permission to execute this command."

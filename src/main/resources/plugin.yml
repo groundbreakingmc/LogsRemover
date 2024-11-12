@@ -1,0 +1,15 @@
+name: '${artifactId}'
+version: '${project.version}'
+main: groundbreaking.logsremover.LogsRemover
+api-version: 1.16
+authors: [ Groundbreaking ]
+description: '${description}'
+website: '${url}'
+
+commands:
+  logsremover: {}
+
+permissions:
+  logsremover.reload:
+    description: allows to reload the plugin
+    default: false

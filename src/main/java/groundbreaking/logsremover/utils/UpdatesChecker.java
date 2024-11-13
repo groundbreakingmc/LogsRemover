@@ -37,7 +37,7 @@ public final class UpdatesChecker {
 
         final HttpClient httpClient = HttpClient.newHttpClient();
         final HttpRequest httpRequest = HttpRequest.newBuilder()
-                .uri(URI.create("https://raw.githubusercontent.com/groundbreakingmc/LogsRemover/main/update.txt"))
+                .uri(URI.create("https://raw.githubusercontent.com/groundbreakingmc/LogsRemover/main/version.txt"))
                 .build();
 
         final CompletableFuture<HttpResponse<String>> responseFuture = httpClient.sendAsync(httpRequest, HttpResponse.BodyHandlers.ofString());

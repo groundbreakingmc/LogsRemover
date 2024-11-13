@@ -11,7 +11,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.stream.Stream;
 
-public class FileRemover {
+public final class FileRemover {
 
     private final LogsRemover plugin;
 

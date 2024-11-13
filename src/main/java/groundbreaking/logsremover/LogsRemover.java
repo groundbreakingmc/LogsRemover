@@ -2,11 +2,13 @@ package groundbreaking.logsremover;
 
 import groundbreaking.logsremover.commands.CommandHandler;
 import groundbreaking.logsremover.utils.FileRemover;
+import groundbreaking.logsremover.utils.UpdatesChecker;
 import groundbreaking.logsremover.utils.config.ConfigLoader;
 import lombok.Getter;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -23,6 +25,8 @@ public final class LogsRemover extends JavaPlugin {
     private long removeAfter;
     private String logsDirectory;
     private String noPermissionMessage;
+    private boolean isUpdateCheckerEnabled;
+    private boolean isDownloadLatestVersionEnabled;
 
     @Override
     public void onEnable() {
@@ -37,6 +41,9 @@ public final class LogsRemover extends JavaPlugin {
 
         final BukkitScheduler scheduler = super.getServer().getScheduler();
         scheduler.runTaskTimerAsynchronously(this, this.fileRemover::removeTime, 0L, 72000L /* 1 hour */);
+
+        final UpdatesChecker updatesChecker = new UpdatesChecker(this);
+        scheduler.runTaskAsynchronously(this, updatesChecker::check);
     }
 
     @Override
@@ -51,6 +58,15 @@ public final class LogsRemover extends JavaPlugin {
         final String specifiedLogsDirectory = config.getString("logs-directory");
         this.logsDirectory = System.getProperty("user.dir") + File.separator + specifiedLogsDirectory;
         this.noPermissionMessage = config.getString("no-permission");
+
+        final ConfigurationSection updates = config.getConfigurationSection("updates");
+        if (updates != null) {
+            this.isUpdateCheckerEnabled = updates.getBoolean("check");
+            this.isDownloadLatestVersionEnabled = updates.getBoolean("auto-update");
+        } else {
+            super.getLogger().warning("Failed to load section \"updates\" from file \"config.yml\". Please check your configuration file, or delete it and restart your server!");
+            super.getLogger().warning("If you think this is a plugin error, leave a issue on the https://github.com/grounbreakingmc/LogsRemover/issues");
+        }
     }
 
     private long convertToHours(final String timeString) {

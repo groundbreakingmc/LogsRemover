@@ -1,15 +1,17 @@
 package groundbreaking.logsremover.commands;
 
 import groundbreaking.logsremover.LogsRemover;
+import groundbreaking.logsremover.utils.UpdatesChecker;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitScheduler;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class CommandHandler implements CommandExecutor, TabCompleter {
+public final class CommandHandler implements CommandExecutor, TabCompleter {
 
     private final LogsRemover plugin;
     private boolean waitConfirm;
@@ -39,6 +41,8 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
                     this.removeall(sender);
             case "confirm" ->
                     this.confirm(sender);
+            case "update" ->
+                    this.update(sender);
             default ->
                     this.usage(sender);
         };
@@ -84,6 +88,18 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
         return true;
     }
 
+    private boolean update(final CommandSender sender) {
+        if (!UpdatesChecker.hasUpdate()) {
+            sender.sendMessage("§2[LogsRemover] §aYou are already up to date!");
+            return true;
+        }
+
+        final BukkitScheduler scheduler = this.plugin.getServer().getScheduler();
+        final UpdatesChecker updatesChecker = new UpdatesChecker(this.plugin);
+        scheduler.runTaskAsynchronously(this.plugin, updatesChecker::downloadJar);
+        return true;
+    }
+
     private boolean usage(final CommandSender sender) {
         sender.sendMessage("§c[LogsRemover] §4Usage:");
         sender.sendMessage("§c[LogsRemover] §c/logsremover reload §f- reload the plugin");
@@ -94,9 +110,16 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
     }
 
     @Override
-    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
         if (sender instanceof ConsoleCommandSender) {
-            return List.of("reload", "help", waitConfirm ? "confirm" : "removeall");
+            final List<String> list = new ArrayList<>();
+            list.add("reload");
+            list.add("help");
+            list.add(waitConfirm ? "confirm" : "removeall");
+            if (UpdatesChecker.getDownloadLink() != null) {
+                list.add("update");
+            }
+            return list;
         }
         return Collections.emptyList();
     }

@@ -6,6 +6,7 @@
 # ╚══════╝░╚════╝░░╚═════╝░╚═════╝░╚═╝░░╚═╝╚══════╝╚═╝░░░░░╚═╝░╚════╝░░░░╚═╝░░░╚══════╝╚═╝░░╚═╝
 #
 # Contact dev(discord): groundbreakingmc
+# Any suggestions or wanna report any error, use: https://github.com/groundbreakingmc/LogsRemover/issues
 
 # Specify here how old does your log file have to be, to be deleted
 # (if you don't write the letter, it will be counted as hours)
@@ -18,6 +19,13 @@ delete-if-older-then: 1w
 
 # Specify here your logs directory
 logs-directory: 'logs'
+
+# Updates checker
+updates:
+  # Does plugin need to check for updates?
+  check: true
+  # Does plugin need to download new version if possible?
+  auto-update: false
 
 # don't touch it
 config-version: 1.0

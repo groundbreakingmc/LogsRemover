@@ -1,0 +1,2 @@
+1.0->https://github.com/groundbreakingmc/LogsRemover/releases/download/1.0/LogsRemover-1.0.jar
+Release
